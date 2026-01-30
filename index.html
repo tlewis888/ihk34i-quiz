@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Quiz Trainer</title>
+
+  <!-- PWA / iOS meta -->
+  <meta name="theme-color" content="#0a84ff" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Quiz Trainer</h1>
+    <p class="subtitle">Übungsmodus • Prüfungsmodus • Statistik — offline & iPhone-ready</p>
+  </header>
+
+  <main>
+    <nav id="menu" aria-label="Hauptmenü">
+      <button onclick="startPractice()" aria-label="Übungsmodus starten">🟢 Übungsmodus</button>
+      <button onclick="startExam()" aria-label="Prüfungsmodus starten">🔵 Prüfungsmodus (30 Fragen)</button>
+      <button onclick="showStats()" aria-label="Statistik anzeigen">📊 Statistik</button>
+    </nav>
+
+    <section id="quiz" aria-live="polite"></section>
+
+    <section id="result" aria-live="polite"></section>
+  </main>
+
+  <footer>
+    <small>Offline-ready PWA — füge das Icon zum Home Screen (Share → Add to Home Screen)</small>
+  </footer>
+
+  <!-- Daten + logika -->
+  <script src="database.js"></script>
+  <script src="quiz.js"></script>
+
+  <!-- Service worker regisztráció (ha támogatott) -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => {
+            console.log('Service Worker registered:', reg.scope);
+          })
+          .catch(err => {
+            console.warn('Service Worker reg failed:', err);
+          });
+      });
+    }
+  </script>
+</body>
+</html>
