@@ -127,3 +127,29 @@ function saveStats(percent) {
     stats.push(percent);
     localStorage.setItem("stats", JSON.stringify(stats));
 }
+
+/* =========================================================
+   🔴 iOS SAFARI FIX – KÖTELEZŐ
+   Ezek kellenek ahhoz, hogy az onclick működjön
+   ========================================================= */
+
+window.startPractice = startPractice;
+window.startExam = startExam;
+window.showStats = function () {
+    const stats = JSON.parse(localStorage.getItem("stats")) || [];
+
+    if (stats.length === 0) {
+        resultDiv.innerHTML = "<p>Noch keine Prüfungen.</p>";
+        return;
+    }
+
+    const avg = Math.round(stats.reduce((a, b) => a + b, 0) / stats.length);
+    const best = Math.max(...stats);
+
+    resultDiv.innerHTML = `
+        <h2>Statistik</h2>
+        <p>Versuche: ${stats.length}</p>
+        <p>Durchschnitt: ${avg}%</p>
+        <p>Bestes Ergebnis: ${best}%</p>
+    `;
+};
