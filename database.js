@@ -1,3 +1,4 @@
+// database.js
 const database = [
     // ============================================================
     // KAPITEL 1: VOLKSWIRTSCHAFTLICHE GRUNDLAGEN (Fragen 1-25)
@@ -95,7 +96,7 @@ const database = [
         q: "Frage 9 (MC): Welche der u. g. Faktoren werden zum Produktionsfaktor Boden gezählt?",
         a: [
             { t: "Rohstoffe", c: true },
-            { t: "Anbaufläche/Standort", c: true }, // (A képen "Wohnfläche" a megtévesztő, de "Standort" a helyes kiegészítés a tananyag alapján, a rendszerben a "Rohstoffe" a biztos pont)
+            { t: "Anbaufläche/Standort", c: true },
             { t: "Geld", c: false },
             { t: "Maschinen", c: false }
         ],
@@ -172,7 +173,7 @@ const database = [
         q: "Frage 16 (MC): In einer Aufschwungphase...",
         a: [
             { t: "sinkt die Arbeitslosigkeit", c: true },
-            { t: "steigen die Zinsen", c: true }, // (A fellendülés végén)
+            { t: "steigen die Zinsen", c: true },
             { t: "sinkt die Produktion", c: false },
             { t: "sinken die Preise stark", c: false }
         ],
@@ -260,7 +261,7 @@ const database = [
         q: "Frage 24 (MC): Das Ziel einer expansiven Geldpolitik ist es...",
         a: [
             { t: "die Investitionen der Unternehmen zu steigern", c: true },
-            { t: "den Konsum der privaten Haushalte zu steigern", c: true }, // (A képen "verringern" volt a Q25-nél, de itt expansív a kérdés, tehát növelés a cél)
+            { t: "den Konsum der privaten Haushalte zu steigern", c: true },
             { t: "den Konsum zu verringern", c: false },
             { t: "die Zinsen zu erhöhen", c: false }
         ],
@@ -495,7 +496,7 @@ const database = [
         q: "Frage 20 (SC - Zuordnung): Sortieren Sie folgende Schritte eines Immobilienkaufvertrages richtig!",
         a: [
             { t: "3 (Vertrag) -> 1 (Vormerkung) -> 2 (Auflassung) -> 4 (Zahlung) -> 5 (Eintragung)", c: false },
-            { t: "3 (Vertrag) -> 1 (Vormerkung) -> 3 (Unterlagen) -> 4 (Zahlung) -> 5 (Auflassung/Umschreibung)", c: true }, // (A helyes sorrend logikája: Szerződés -> Vormerkung -> Fizetés -> Tulajdonátruházás)
+            { t: "3 (Vertrag) -> 1 (Vormerkung) -> 3 (Unterlagen) -> 4 (Zahlung) -> 5 (Auflassung/Umschreibung)", c: true },
             { t: "1 -> 2 -> 3 -> 4 -> 5", c: false },
             { t: "5 -> 4 -> 3 -> 2 -> 1", c: false }
         ],
@@ -736,7 +737,7 @@ const database = [
         cat: "2. Recht",
         q: "Frage 42 (SC): In verschiedenen Abteilungen entscheidet der Rang sich nach (Locus-Prinzip)...",
         a: [
-            { t: "dem Datum der Eintragung", c: true }, 
+            { t: "dem Datum der Eintragung", c: true },
             { t: "der Summe", c: false },
             { t: "dem Alphabet", c: false },
             { t: "dem Eigentümer", c: false }
@@ -830,12 +831,9 @@ const database = [
             { t: "Hypothek", c: false }
         ],
         e: "Gesetzlich Brief, praktisch oft Buch."
-    }
+    },
 
-
-
-
-// ============================================================
+    // ============================================================
     // KAPITEL 3: STEUERRECHTLICHE GRUNDLAGEN (Fragen 1-40)
     // ============================================================
     {
@@ -854,7 +852,7 @@ const database = [
         q: "Frage 2 (MC): Steuern können direkt vom Steuerschuldner abgeführt werden oder indirekt. Zu den indirekten Steuern gehören u. a.:",
         a: [
             { t: "Umsatzsteuer", c: true },
-            { t: "Grunderwerbsteuer", c: true }, // (Gyakran közvetettként kezelik a szakirodalomban a forgalmi jellege miatt, bár vitatott, a tesztben itt helyes lehet)
+            { t: "Grunderwerbsteuer", c: true },
             { t: "Einkommensteuer", c: false },
             { t: "Körperschaftsteuer", c: false }
         ],
@@ -1119,7 +1117,7 @@ const database = [
         a: [
             { t: "Maklergebühr (anteilig für Gebäude)", c: true },
             { t: "Grunderwerbsteuer (anteilig für Gebäude)", c: true },
-            { t: "Grundschuldbestellungskosten", c: false }, // (Finanzierungskosten = Werbungskosten)
+            { t: "Grundschuldeintragungskosten", c: false },
             { t: "Kosten für das Grundstück selbst", c: false }
         ],
         e: "Anschaffungsnebenkosten ohne Geldbeschaffungskosten."
@@ -1196,8 +1194,8 @@ const database = [
         a: [
             { t: "Maklercourtage", c: true },
             { t: "Notarkosten für die Beurkundung des Kaufvertrags", c: true },
-            { t: "Grundschuldeintragungskosten", c: false }, // (Finanzierungskosten)
-            { t: "Damnum", c: false } // (Finanzierungskosten)
+            { t: "Grundschuldeintragungkosten", c: false },
+            { t: "Damnum", c: false }
         ],
         e: "Alles was zum Erwerb nötig ist, außer Finanzierung."
     },
@@ -1308,7 +1306,7 @@ const database = [
         cat: "4. Förderung",
         q: "Frage 3 (SC): Wie hoch ist die Einkommensgrenze (zu versteuerndes Einkommen) für die Arbeitnehmersparzulage bei Bausparverträgen für Alleinstehende? (Stand 2024)",
         a: [
-            { t: "40.000 EUR", c: true }, // (A régi könyvben 17.900 volt, de a javított jogszabály 40.000)
+            { t: "40.000 EUR", c: true },
             { t: "17.900 EUR", c: false },
             { t: "25.600 EUR", c: false },
             { t: "50.000 EUR", c: false }
@@ -1354,7 +1352,7 @@ const database = [
         a: [
             { t: "Bei Tod des Ehegatten", c: true },
             { t: "Bei Arbeitslosigkeit von mindestens einem Jahr", c: true },
-            { t: "Bei Heirat", c: true }, // (A régi szabály szerint igen, ma már ritkább, de a könyv szerint helyes)
+            { t: "Bei Heirat", c: true },
             { t: "Für den Kauf eines Autos", c: false }
         ],
         e: "Härtefallregelungen."
@@ -1512,10 +1510,9 @@ const database = [
             { t: "Ein Konto für Wohngeldempfänger", c: false }
         ],
         e: "Grundlage für die nachgelagerte Besteuerung im Alter."
-    }
+    },
 
-
-// ============================================================
+    // ============================================================
     // KAPITEL 5: FINANZIERUNG (Darlehensarten & Zinsen)
     // ============================================================
     {
@@ -1656,7 +1653,7 @@ const database = [
         a: [
             { t: "Zinssicherheit über die gesamte Laufzeit.", c: true },
             { t: "Schuldenfreiheit am Ende der Zinsbindung garantiert.", c: true },
-            { t: "Niedrige monatliche Rate.", c: false }, // (Rate ist meist höher, da schneller getilgt wird)
+            { t: "Niedrige monatliche Rate.", c: false },
             { t: "Hohe Flexibilität.", c: false }
         ],
         e: "Planungssicherheit pur."
@@ -1676,8 +1673,8 @@ const database = [
         cat: "5. Finanzierung",
         q: "Frage 15 (SC): Wie berechnet man die anfängliche Tilgung in Prozent?",
         a: [
-            { t: "(Monatliche Rate x 12) - (Darlehenssumme x Zinssatz) / Darlehenssumme * 100", c: false }, // (Bonyolult, egyszerűbb: Jahresleistung - Zins = Tilgung)
-            { t: "Jahresrate in % minus Sollzins in %", c: true }, // (A legegyszerűbb ökölszabály)
+            { t: "(Monatliche Rate x 12) - (Darlehenssumme x Zinssatz) / Darlehenssumme * 100", c: false },
+            { t: "Jahresrate in % minus Sollzins in %", c: true },
             { t: "Sollzins plus Effektivzins", c: false },
             { t: "Darlehen durch Laufzeit", c: false }
         ],
@@ -1715,8 +1712,8 @@ const database = [
         a: [
             { t: "Prüfung der Einkommensnachweise (Gehalt, Rente)", c: true },
             { t: "Prüfung der Ausgaben (Haushaltsrechnung)", c: true },
-            { t: "Prüfung des Personalausweises", c: false }, // (Das ist Legitimation/Kreditfähigkeit)
-            { t: "Prüfung des Grundbuchs", c: false } // (Das ist Objektprüfung/Sicherheit)
+            { t: "Prüfung des Personalausweises", c: false },
+            { t: "Prüfung des Grundbuchs", c: false }
         ],
         e: "Wirtschaftliche Fähigkeit."
     },
@@ -1793,7 +1790,7 @@ const database = [
             { t: "Girokonten", c: true },
             { t: "Kreditkarten", c: true },
             { t: "Laufende Kredite", c: true },
-            { t: "Einkommen und Vermögen", c: false } // (Einkommen wird NICHT gespeichert!)
+            { t: "Einkommen und Vermögen", c: false }
         ],
         e: "Vertragsdaten."
     },
@@ -1851,12 +1848,9 @@ const database = [
             { t: "Das Eigenkapital.", c: false }
         ],
         e: "Die monatliche Belastung."
-    }
+    },
 
-
-
-
-// ============================================================
+    // ============================================================
     // KAPITEL 7: BEWERTUNG VON SICHERHEITEN (Fragen 1-35)
     // ============================================================
     {
@@ -1876,7 +1870,7 @@ const database = [
         a: [
             { t: "Grundschuld", c: true },
             { t: "Hypothek", c: true },
-            { t: "Abtretung von Forderungen (Zession)", c: false }, // (Gyakran vegyes, de a tiszta dologi biztosíték a jelzálog)
+            { t: "Abtretung von Forderungen (Zession)", c: false },
             { t: "Bürgschaft", c: false }
         ],
         e: "Haftung mit einem Gegenstand/Recht."
@@ -2119,7 +2113,7 @@ const database = [
             { t: "Verwaltungskosten", c: true },
             { t: "Instandhaltungskosten", c: true },
             { t: "Mietausfallwagnis", c: true },
-            { t: "Heizkosten", c: false } // (Umlagefähig)
+            { t: "Heizkosten", c: false }
         ],
         e: "Kosten, die den Ertrag mindern."
     },
@@ -2255,7 +2249,7 @@ const database = [
             { t: "Erzielung einer Rendite (Mieteinnahmen)", c: true },
             { t: "Steuerliche Vorteile (Abschreibung/Werbungskosten)", c: true },
             { t: "Schutz vor Inflation (Sachwert)", c: true },
-            { t: "Mietfreies Wohnen", c: false } // (Das ist Motiv Eigennutzer)
+            { t: "Mietfreies Wohnen", c: false }
         ],
         e: "Vermögensaufbau und -sicherung."
     },
@@ -2286,7 +2280,7 @@ const database = [
         q: "Frage 4 (SC): Welche Kennzahl ist für den Kapitalanleger am wichtigsten?",
         a: [
             { t: "Nettomietrendite (Reinertrag im Verhältnis zum Gesamtkaufpreis)", c: true },
-            { t: "Bruttomietrendite", c: false }, // (Weniger aussagekräftig)
+            { t: "Bruttomietrendite", c: false },
             { t: "Liebhaberwert", c: false },
             { t: "Bodenrichtwert", c: false }
         ],
@@ -2310,7 +2304,7 @@ const database = [
             { t: "Abzug der Schuldzinsen als Werbungskosten", c: true },
             { t: "Gebäudeabschreibung (AfA)", c: true },
             { t: "Abzug der Tilgung", c: false },
-            { t: "Baukindergeld", c: false } // (Nur Eigennutzer)
+            { t: "Baukindergeld", c: false }
         ],
         e: "Staatliche Beteiligung an den Kosten."
     },
@@ -2334,7 +2328,7 @@ const database = [
             { t: "Die Vermietbarkeit.", c: false },
             { t: "Die Finanzierbarkeit.", c: false }
         ],
-        e: "Immobilien sind 'immobil' und daher oft schwer fungibel (nicht schnell liquidierbar)."
+        e: "Immobilien sind 'immobil' und daher oft schwer fungibel."
     },
     {
         cat: "8. Kapitalanlage",
@@ -2379,12 +2373,9 @@ const database = [
             { t: "Frist beträgt 2 Jahre.", c: false }
         ],
         e: "Wichtiger Exit-Faktor."
-    }
+    },
 
-
-
-
-// ============================================================
+    // ============================================================
     // KAPITEL 9: KUNDENBERATUNG & RECHTLICHE PFLICHTEN (Fragen 1-25)
     // ============================================================
     {
@@ -2426,7 +2417,7 @@ const database = [
         a: [
             { t: "Name und Anschrift des Vermittlers", c: true },
             { t: "Registrierungsnummer und Registerstelle", c: true },
-            { t: "Angaben zur Beratung und Vergütung", c: false }, // (Ez külön van, bár kapcsolódik, a statusinfo a "névjegy")
+            { t: "Angaben zur Beratung und Vergütung", c: false },
             { t: "Die private Handynummer", c: false }
         ],
         e: "Identität und Zulassung."
@@ -2457,9 +2448,9 @@ const database = [
         cat: "9. Beratung",
         q: "Frage 7 (SC): Welche Pflicht besteht bezüglich der Beratung?",
         a: [
-            { t: "Beratungspflicht (Kunde muss beraten werden, Verzicht nicht möglich)", c: true }, // (Kivétel: § 34i Abs. 3 GewO bizonyos esetek, de főszabály a tanácsadás)
+            { t: "Beratungspflicht (Kunde muss beraten werden, Verzicht nicht möglich)", c: true },
             { t: "Beratung ist freiwillig", c: false },
-            { t: "Der Kunde kann schriftlich auf Beratung verzichten", c: false }, // (Immobiliardarlehen: Beratung ist Pflicht!)
+            { t: "Der Kunde kann schriftlich auf Beratung verzichten", c: false },
             { t: "Nur bei komplizierten Fällen", c: false }
         ],
         e: "Gesetzlicher Schutz des Verbrauchers."
@@ -2547,7 +2538,7 @@ const database = [
         a: [
             { t: "Wenn das Darlehen nach Ablauf von 10 Jahren (bei längerer Zinsbindung) gemäß § 489 BGB gekündigt wird", c: true },
             { t: "Wenn der Kunde arbeitslos wird", c: false },
-            { t: "Wenn das Haus verkauft wird", c: false }, // (Itt is kérhet kártérítést, csak a felmondást kell elfogadnia)
+            { t: "Wenn das Haus verkauft wird", c: false },
             { t: "Wenn die Zinsen gesunken sind", c: false }
         ],
         e: "Gesetzliches Kündigungsrecht nach 10 Jahren."
@@ -2633,7 +2624,7 @@ const database = [
         cat: "9. Beratung",
         q: "Frage 23 (SC): Wie hoch ist die Mindestdeckungssumme der Berufshaftpflicht pro Schadensfall?",
         a: [
-            { t: "460.000 EUR (Stand 2024, angepasst)", c: true }, // (Korábban 460k, majd emelve, a vizsgában a nagyságrend a fontos)
+            { t: "460.000 EUR (Stand 2024, angepasst)", c: true },
             { t: "1 Million EUR", c: false },
             { t: "100.000 EUR", c: false },
             { t: "10.000 EUR", c: false }
@@ -2673,7 +2664,7 @@ const database = [
             { t: "1.500 EUR", c: true },
             { t: "4.000 EUR", c: false },
             { t: "2.500 EUR", c: false },
-            { t: "1.000 EUR (Sicherheitsabschlag beachten)", c: false } // (Egyszerűsített kérdésnél a különbözet a válasz)
+            { t: "1.000 EUR (Sicherheitsabschlag beachten)", c: false }
         ],
         e: "Einnahmen - Ausgaben = Freies Budget."
     },
@@ -2769,25 +2760,11 @@ const database = [
         cat: "10. Rechnen",
         q: "Frage 10 (SC): Was ist teurer: Ein Nominalzins von 1,9 % mit 100% Auszahlung oder ein Nominalzins von 1,7 % mit 95% Auszahlung (Disagio) auf 5 Jahre?",
         a: [
-            { t: "Das Disagio-Angebot ist wahrscheinlich teurer (Effektivzins prüfen!)", c: true }, // (Rövid futamidőnél a Disagio nagyon megdobja az effektív kamatot)
+            { t: "Das Disagio-Angebot ist wahrscheinlich teurer (Effektivzins prüfen!)", c: true },
             { t: "Das Disagio-Angebot ist immer billiger", c: false },
             { t: "Beide sind gleich", c: false },
             { t: "Nominalzins ist entscheidend", c: false }
         ],
         e: "Effektivzinsvergleich ist notwendig."
     }
-];
-
-
-
-
-
-
-];
-
-
-
-
-
-
-
+]; // EOF
