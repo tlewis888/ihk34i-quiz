@@ -1,46 +1,51 @@
-// firebase.js — EGYSZERŰ, COMPAT VERZIÓ (EZ KELL NEKED)
+// firebase.js — COMPAT (GitHub Pages / sima <script> módban működik)
 
 const firebaseConfig = {
   apiKey: "AIzaSyDi3eH4Km5Wh-eL-T2263BWTjt5wtxMa_Q",
   authDomain: "ihk34i-quiz.firebaseapp.com",
   projectId: "ihk34i-quiz",
-  storageBucket: "ihk34i-quiz.firebasestorage.app",
+  storageBucket: "ihk34i-quiz.appspot.com",
   messagingSenderId: "760305016875",
   appId: "1:760305016875:web:45c1afa6a731e75c020a6e"
 };
 
-// Firebase indítás
-firebase.initializeApp(firebaseConfig);
+// Ne inicializáld kétszer!
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
-// Globális elérés
-window.auth = firebase.auth();
-window.db = firebase.firestore();
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-// Login állapot figyelése
+window.auth = auth;
+window.db = db;
+
+function setAuthStatus(text, ok = true) {
+  const el = document.getElementById("authStatus");
+  if (!el) return;
+  el.textContent = text;
+  el.classList.toggle("bad", !ok);
+}
+
 auth.onAuthStateChanged(user => {
-  const status = document.getElementById("authStatus");
-  if (!status) return;
-
   if (user) {
-    status.innerText = "Bejelentkezve: " + user.email;
+    setAuthStatus("✅ " + user.email, true);
   } else {
-    status.innerText = "Nincs bejelentkezve.";
+    setAuthStatus("🔒 nicht eingeloggt (lokal)", true);
   }
 });
 
 // REGISZTRÁCIÓ
 window.register = async function () {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+  const email = document.getElementById("email")?.value.trim();
+  const password = document.getElementById("password")?.value.trim();
 
-  if (!email || !password) {
-    alert("Írd be az emailt és a jelszót.");
-    return;
-  }
+  if (!email || !password) return alert("Bitte Email + Passwort eingeben.");
+  if (password.length < 6) return alert("Passwort: mindestens 6 Zeichen.");
 
   try {
     await auth.createUserWithEmailAndPassword(email, password);
-    alert("Sikeres regisztráció!");
+    alert("✅ Registrierung erfolgreich!");
   } catch (e) {
     alert(e.message);
   }
@@ -48,13 +53,10 @@ window.register = async function () {
 
 // BELÉPÉS
 window.login = async function () {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+  const email = document.getElementById("email")?.value.trim();
+  const password = document.getElementById("password")?.value.trim();
 
-  if (!email || !password) {
-    alert("Írd be az emailt és a jelszót.");
-    return;
-  }
+  if (!email || !password) return alert("Bitte Email + Passwort eingeben.");
 
   try {
     await auth.signInWithEmailAndPassword(email, password);
@@ -65,5 +67,36 @@ window.login = async function () {
 
 // KILÉPÉS
 window.logout = async function () {
-  await auth.signOut();
+  try {
+    await auth.signOut();
+  } catch (e) {
+    alert(e.message);
+  }
+};
+
+/* -------------------------------------------------------
+   Firestore helper: eredmények mentése user alá
+   ------------------------------------------------------- */
+window.saveAttemptToCloud = async function (attempt) {
+  const user = auth.currentUser;
+  if (!user) return false;
+
+  // attempt: { mode, score, total, percent, durationSec, categoryBreakdown, ts }
+  const ref = db.collection("users").doc(user.uid).collection("attempts");
+  await ref.add(attempt);
+  return true;
+};
+
+window.loadAttemptsFromCloud = async function (limit = 50) {
+  const user = auth.currentUser;
+  if (!user) return [];
+
+  const snap = await db
+    .collection("users").doc(user.uid)
+    .collection("attempts")
+    .orderBy("ts", "desc")
+    .limit(limit)
+    .get();
+
+  return snap.docs.map(d => d.data());
 };
