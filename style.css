@@ -149,7 +149,14 @@ button:disabled{
   border-radius: var(--radius);
   background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
   box-shadow: var(--shadow-soft);
+
+  position: sticky;
+  top: 10px;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
+
 
 .topbar-left, .topbar-right{
   display:flex;
@@ -386,3 +393,4 @@ small{ color: var(--muted); }
   }
 }
 */
+
