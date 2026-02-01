@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IHK34i Quiz Trainer</title>
+  <title>Quiz Trainer</title>
 
-  <!-- PWA -->
+  <!-- PWA / iOS meta -->
   <meta name="theme-color" content="#0a84ff" />
   <link rel="manifest" href="manifest.json" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -16,102 +16,104 @@
 </head>
 
 <body>
+
   <!-- Sticky Topbar -->
   <header class="topbar">
-    <div class="topbar__left">
+    <div class="topbar-left">
+      <button class="icon-btn" id="toggleAuthBtn" aria-label="Profil öffnen">☰</button>
       <div class="brand">
-        <div class="brand__title">IHK34i Quiz</div>
-        <div class="brand__sub">Offline • iPhone-ready • Cloud-Profil</div>
+        <h1>Quiz Trainer</h1>
+        <p class="subtitle">Übungsmodus • Prüfungsmodus (IHK) • Statistik — offline & iPhone-ready</p>
       </div>
     </div>
 
-    <div class="topbar__right">
-      <div id="userBadge" class="userBadge hidden"></div>
-      <button id="btnOpenAuth" class="btn btn--ghost">Anmelden</button>
-      <button id="btnLogout" class="btn btn--ghost hidden">Abmelden</button>
+    <div class="topbar-right">
+      <div class="status-pill" id="authStatus">Firebase: lädt…</div>
+      <div class="timer" id="examTimer" hidden>⏱ 00:00</div>
     </div>
   </header>
 
-  <main class="container">
-    <section class="panel">
-      <nav id="menu" class="menu" aria-label="Hauptmenü">
-        <button class="btn" onclick="startPractice()">🟢 Übungsmodus</button>
-        <button class="btn" onclick="startExamB()">🔵 Prüfungsmodus B (IHK)</button>
-        <button class="btn btn--ghost" onclick="showStats()">📊 Statistik</button>
-        <button class="btn btn--ghost" onclick="resetLocal()">🧹 Reset (nur Gerät)</button>
-      </nav>
-
-      <div class="metaRow">
-        <div id="syncState" class="pill">Offline bereit</div>
-        <div id="examState" class="pill pill--muted">Kein Test aktiv</div>
-      </div>
-    </section>
-
-    <section id="result" class="result" aria-live="polite"></section>
-    <section id="quiz" class="quiz" aria-live="polite"></section>
-  </main>
-
-  <footer class="footer">
-    <small>Tip: iPhone Safari → Share → “Add to Home Screen”</small>
-  </footer>
-
-  <!-- Auth Modal -->
-  <div id="authModal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Login">
-    <div class="modal__card">
-      <div class="modal__header">
+  <!-- Slide-in Auth Panel -->
+  <aside class="auth-panel" id="authPanel" aria-label="Profil & Login" hidden>
+    <div class="auth-panel-inner">
+      <div class="auth-head">
         <h2>Profil</h2>
-        <button id="btnCloseAuth" class="btn btn--ghost">✕</button>
+        <button class="icon-btn" id="closeAuthBtn" aria-label="Schließen">✕</button>
       </div>
 
-      <div class="tabs">
-        <button class="tab active" data-tab="login">Login</button>
-        <button class="tab" data-tab="register">Register</button>
-      </div>
-
-      <div class="modal__body">
-        <div class="formRow">
-          <label>E-Mail</label>
-          <input id="authEmail" type="email" placeholder="name@mail.com" autocomplete="email" />
-        </div>
-        <div class="formRow">
-          <label>Passwort</label>
-          <input id="authPass" type="password" placeholder="••••••••" autocomplete="current-password" />
-        </div>
-
-        <div class="row">
-          <button id="btnDoLogin" class="btn">Anmelden</button>
-          <button id="btnDoRegister" class="btn hidden">Konto erstellen</button>
-        </div>
-
-        <p class="hint" id="authHint">
-          Tipp: Login = bestehő fiók. Register = új fiók.
+      <div class="auth-box">
+        <p class="muted" id="authHint">
+          Mit Login werden deine Ergebnisse in der Cloud gespeichert (Firestore).
+          Ohne Login bleibt alles lokal auf diesem Gerät.
         </p>
 
-        <div class="divider"></div>
+        <label class="field">
+          <span>Email</span>
+          <input id="email" type="email" placeholder="Email" autocomplete="email" />
+        </label>
 
-        <p class="hint">
-          Mentés:
-          <b>Ha be vagy jelentkezve</b> → Firestore (felhő, több eszköz).
-          <b>Ha nem</b> → csak a telefon/gép (offline localStorage).
-        </p>
+        <label class="field">
+          <span>Passwort</span>
+          <input id="password" type="password" placeholder="Passwort" autocomplete="current-password" />
+        </label>
 
-        <div id="authMsg" class="notice hidden"></div>
+        <div class="auth-actions">
+          <button class="primary" onclick="login()">Einloggen</button>
+          <button onclick="register()">Registrieren</button>
+          <button class="danger" onclick="logout()">Logout</button>
+        </div>
+
+        <hr class="sep" />
+
+        <div class="small-actions">
+          <button onclick="syncLocalToCloud()">⬆ Lokale Daten in Cloud kopieren</button>
+          <button onclick="wipeLocalStats()">🧹 Lokale Statistik löschen</button>
+        </div>
       </div>
     </div>
-  </div>
+  </aside>
 
-  <!-- Daten -->
+  <main class="container">
+    <nav id="menu" class="menu" aria-label="Hauptmenü">
+      <button class="cardbtn" onclick="startPractice()" aria-label="Übungsmodus starten">
+        🟢 Übungsmodus <span class="hint">Sofort Feedback + Erklärung</span>
+      </button>
+
+      <button class="cardbtn" onclick="startExam()" aria-label="Prüfungsmodus starten">
+        🔵 Prüfungsmodus (IHK) <span class="hint">30 Fragen • Timer • Ergebnis pro Kategorie</span>
+      </button>
+
+      <button class="cardbtn" onclick="showStats()" aria-label="Statistik anzeigen">
+        📊 Statistik <span class="hint">Best / Ø / Verlauf</span>
+      </button>
+    </nav>
+
+    <section id="quiz" class="quiz" aria-live="polite"></section>
+    <section id="result" class="result" aria-live="polite"></section>
+
+    <footer class="footer">
+      <small>Offline-ready PWA — iPhone: Share → Add to Home Screen</small>
+    </footer>
+  </main>
+
+  <!-- Firebase (COMPAT!) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script src="firebase.js"></script>
+
+  <!-- Daten + Logik -->
   <script src="database.js"></script>
+  <script src="quiz.js"></script>
 
-  <!-- App modules -->
-  <script type="module" src="firebase.js"></script>
-  <script type="module" src="quiz.js"></script>
-
-  <!-- Service worker -->
+  <!-- Service worker reg -->
   <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(() => {});
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js")
+          .then(reg => console.log("SW registered:", reg.scope))
+          .catch(err => console.warn("SW reg failed:", err));
       });
     }
   </script>
