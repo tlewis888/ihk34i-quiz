@@ -16,21 +16,30 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-  <!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
-
-<script src="firebase.js"></script>
-
 <body>
-
   <header>
     <h1>Quiz Trainer</h1>
     <p class="subtitle">Übungsmodus • Prüfungsmodus • Statistik — offline & iPhone-ready</p>
   </header>
 
   <main>
+
+    <!-- AUTH PANEL -->
+    <section id="authPanel" class="auth" aria-label="Login">
+      <div id="authLoggedOut">
+        <input id="email" type="email" placeholder="Email" autocomplete="email" />
+        <input id="password" type="password" placeholder="Jelszó" autocomplete="current-password" />
+        <button id="btnLogin">Belépés</button>
+        <button id="btnRegister">Regisztráció</button>
+        <p id="authMsg" aria-live="polite"></p>
+      </div>
+
+      <div id="authLoggedIn" style="display:none;">
+        <span id="userLabel"></span>
+        <button id="btnLogout">Kilépés</button>
+      </div>
+    </section>
+
     <nav id="menu" aria-label="Hauptmenü">
       <button onclick="startPractice()" aria-label="Übungsmodus starten">🟢 Übungsmodus</button>
       <button onclick="startExam()" aria-label="Prüfungsmodus starten">🔵 Prüfungsmodus (30 Fragen)</button>
@@ -38,7 +47,6 @@
     </nav>
 
     <section id="quiz" aria-live="polite"></section>
-
     <section id="result" aria-live="polite"></section>
   </main>
 
@@ -46,24 +54,23 @@
     <small>Offline-ready PWA — füge das Icon zum Home Screen (Share → Add to Home Screen)</small>
   </footer>
 
-  <!-- Daten + logika -->
+  <!-- Adat + logika -->
   <script src="database.js"></script>
   <script src="quiz.js"></script>
 
-  <!-- Service worker regisztráció (ha támogatott) -->
+  <!-- Firebase + Auth (ESM) -->
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="auth.js"></script>
+
+  <!-- Service worker regisztráció -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
-          .then(reg => {
-            console.log('Service Worker registered:', reg.scope);
-          })
-          .catch(err => {
-            console.warn('Service Worker reg failed:', err);
-          });
+          .then(reg => console.log('Service Worker registered:', reg.scope))
+          .catch(err => console.warn('Service Worker reg failed:', err));
       });
     }
   </script>
 </body>
 </html>
-
